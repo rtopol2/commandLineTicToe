@@ -1,0 +1,23 @@
+{
+  "name": "command_toe",
+  "version": "1.0.0",
+  "description": "Command line tic tac toe game using node's readline module",
+  "main": "ticTac.js",
+  "scripts": {
+    "start": "node ticTac.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtopol2/commandLineTicToe.git"
+  },
+  "author": "Ross Topol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rtopol2/commandLineTicToe/issues"
+  },
+  "homepage": "https://github.com/rtopol2/commandLineTicToe#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.7"
+  }
+}

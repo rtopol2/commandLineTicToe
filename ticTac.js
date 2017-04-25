@@ -1,9 +1,4 @@
-const readline = require('readline');
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+const rl = require('readline-sync');
 
 console.log(`\n\nLet's play some TIC TAC TOE!\n\n`);
 
@@ -19,16 +14,18 @@ function playTicTacToe() {
   ];
   let turn = `<-`
   let winner;
-  let input = process.argv[2];
   takeTurn();
+  playAgain();
 
-  rl.question(`Would you like to play again? (Y/N)`, (answer) => {
+
+  function playAgain() {
+    let playAgain = rl.question(`Would you like to play again? (Y/N)`);
     if (answer.toLowercase() === `y`) {
       playTicTacToe();
     } else {
       rl.close();
     }
-  })
+  }
 
   function takeTurn() {
     winner = checkBoard();
@@ -37,17 +34,13 @@ function playTicTacToe() {
     } else {
       changeTurn();
       printBoard();
-      let coords = getCoords();
-      console.log("COORDS", coords)
-      makeMove(coords)
+      makeMove(...getCoords())
       takeTurn();
     }
   }
 
-  function makeMove(coords) {
-    var x = coords[1];
-    var y = coords[0];
-    if (board[y][x] !== '_') {
+  function makeMove(y,x) {
+    if (x > 3 || y > 3 || x < 0 || y < 0 || board[y][x] !== '_') {
       console.log(`\n ${x},${y} are invalid coordinates.\n`);
       makeMove(getCoords());
     } else {
@@ -56,16 +49,11 @@ function playTicTacToe() {
   }
 
   function getCoords () {
-    let coords = [];
-    rl.question(`Please enter in coordinates (X,Y) for your move.
+    const x = rl.question(`Please enter in coordinates (X,Y) for your move.
 
-      X:`, (x) => {
-      coords[1] = x;
-    });
-    rl.question(`Y:`, (y) => {
-      coords[0] = y;
-    });
-    return coords;
+      X:`);
+    const y = rl.question(`Y:`);
+    return [y,x];
   }
 
   function changeTurn() {
@@ -75,13 +63,12 @@ function playTicTacToe() {
   function printBoard() {
     console.log(`
 
-               X
-
-             1 2 3
-             _ _ _
-          1 |${board[0,0]}|${board[0,1]}|${board[0,2]}|
-       Y  2 |${board[1,0]}|${board[1,1]}|${board[1,2]}|
-          3 |${board[2,0]}|${board[2,1]}|${board[2,2]}|
+            _ _ _
+          2|${board[2][0]}|${board[2][1]}|${board[2][2]}|
+        Y 1|${board[1][0]}|${board[1][1]}|${board[1][2]}|
+          0|${board[0][0]}|${board[0][1]}|${board[0][2]}|
+            0 1 2
+              X
 
 Player 1 (O) ${turn} Player 2 (X)
 
